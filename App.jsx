@@ -1556,7 +1556,7 @@ export default function Groceries() {
   }
 
   function clearCart() {
-    setCart()
+    setCart([])
   }
 
   return (
@@ -1627,7 +1627,7 @@ export default function Groceries() {
 
           <button onClick={closeCart} className="closebtn">Close</button>
 
-          <button onClick={setCart} className="closebtn">Clear Cart</button>
+          <button onClick={() =>setCart([]) className="closebtn">Clear Cart</button>
 
 
 
