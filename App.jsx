@@ -244,14 +244,12 @@ const products = [
 import { useState } from "react";
 import Navbar from "./assets/components/Navbar"
 import "./App.css";
-import Cartbar from "./assets/components/Cartbar";
 
 export default function Groceries() {
+
   const [groceries, setGroceries] = useState(products);
   const [itemvisible, setitemvisible] = useState(false);
-
   const [selectedDetail, setSelectedDetail] = useState(null);
-
   const [CartVisible, setCartVisible] = useState(false);
   const [Cart, setCart] = useState([]);
 
@@ -259,20 +257,19 @@ export default function Groceries() {
   function handleClick() {
     setitemvisible(prev => !prev)
   }
-
   function handleDetails(product) {
     setSelectedDetail(product);
-
   }
-
   function closeDetails() {
     setSelectedDetail(null);
-
   }
-
   function closeCart() {
     setCartVisible(false);
   }
+  function clearCart() {
+    setCart()
+  }
+
   return (
 
     <>
@@ -310,26 +307,28 @@ export default function Groceries() {
           }
         </div>
       }
-      
+
       {CartVisible &&
         <div onClick={() => setCartVisible(false)} className="cartitems">
+          <button onClick={closeCart} className="closebtn">Close</button>
+          <button onClick={setCart} className="closebtn">Clear Cart</button>
+
           <div onClick={(e) => e.stopPropagation()}>
-            
+
             {Cart.length === 0 ?
               (
                 <div className="empty-cart">
                   <h2>Your cart is empty</h2>
-                  <button className="btn2" onClick={closeCart}>Close</button>
                 </div>
               ) : (
-                Cart.map((cartitem) => <div key={cartitem.id} className="cart-item">
-                  <img src={cartitem.thumbnail} alt={cartitem.title} />
-                  <h2>{cartitem.title}</h2>
-                  <p>Price: <strong>${cartitem.price}</strong></p>
-                  <p>Rating: <strong>{cartitem.rating}</strong></p>
-                  <button className="btn2" onClick={closeCart}>Close</button>
-                </div>)
-              )
+                Cart.map((cartitem) =>
+                  <div key={cartitem.id} className="cart-item">
+                    <img src={cartitem.thumbnail} alt={cartitem.title} />
+                    <h2>{cartitem.title}</h2>
+                    <p>Price: <strong>${cartitem.price}</strong></p>
+                    <p>Rating: <strong>{cartitem.rating}</strong></p>
+                  </div>
+                ))
             }
           </div>
         </div>
